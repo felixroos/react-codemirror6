@@ -5,6 +5,7 @@ import { Extension, EditorState, Transaction } from '@codemirror/state'
 export const CodeMirrorLite = ({
   value: valueProp,
   onChange: onChangeProp,
+  onInit: onInitProp,
   extensions = [],
   ...props
 }: Omit<
@@ -13,6 +14,7 @@ export const CodeMirrorLite = ({
 > & {
   value: string
   onChange?: (value: string) => void
+  onInit?: (view: EditorView) => void
   extensions?: Extension
 }): JSX.Element => {
   // This ref is needed to allow changes to prevent binding the
@@ -92,6 +94,7 @@ export const CodeMirrorLite = ({
         state,
         parent: editorParentElRef.current
       })
+      onInitProp?.(view);
       editorRef.current = {
         view
       }
